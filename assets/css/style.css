@@ -1,0 +1,8 @@
+h1 {
+    background-image: linear-gradient(to right, #286BC4, #26105A);
+}
+
+#search-btn {
+    background-color: #286BC4;
+    color: white;
+}
