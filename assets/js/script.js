@@ -1,6 +1,7 @@
 APIKey = "433db97a8512e8112426ca764b0710cc";
 
 var currentEl = document.querySelector("#current-weather");
+var forecastEl = document.querySelector("#forecast-card-container");
 
 
 var searchCity = "austin";
@@ -16,7 +17,10 @@ var getCurrent = function(city) {
                 console.log("response is good!");
                 response.json()
                     .then(function(data) {
-                        displayCurrent(data); //add fcn to display current conditions here --> something like displayCurrent(data)
+                        var latitude = data.coord.lat;
+                        var longitude = data.coord.lon;
+                        displayCurrent(data, latitude, longitude); //add fcn to display current conditions here --> something like displayCurrent(data)
+                        getForecast(latitude, longitude);
                     })
             } else {
                 alert("Error: didn't work...")
@@ -26,7 +30,7 @@ var getCurrent = function(city) {
 
 // function to get and display current UVI (since current api didn't have it, I had to use the lat and lon values from current api to get the current uvi from the One Call API)
 var getCurrentUVI = function(latitude, longitude) {
-    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&appid=" + APIKey;
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&appid=" + APIKey + "&exclude=minutely,hourly,alerts";
     
     // get api data AND display the UVI element
     fetch(apiUrl)
@@ -56,15 +60,18 @@ var getCurrentUVI = function(latitude, longitude) {
         })
 }
 
-var getForecast = function(city) {
-    var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey + "&?units=imperial";
+var getForecast = function(latitude, longitude) {
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&appid=" + APIKey + "&exclude=current,minutely,hourly,alerts";
 
     fetch(apiUrl)
         .then(function(response) {
             if (response.ok) {
                 console.log("#2 worked");
                 response.json()
-                    .then() // put fcn here to display five day forecast --> something like displayForecast(data)
+                    .then(function(data) {
+                        debugger;
+                        displayForecast(data);
+                    }) // put fcn here to display five day forecast --> something like displayForecast(data)
             } else {
                 alert("#2 didn't work...");
             }
@@ -72,7 +79,7 @@ var getForecast = function(city) {
 }
 
 // function to display the data of the current weather from the api
-var displayCurrent = function(current) {
+var displayCurrent = function(current, lat, lon) {
     // add city and date to top of div
     var cityName = current.name;
     var date = new Date();
@@ -108,17 +115,35 @@ var displayCurrent = function(current) {
 
 
     // add UV index
-    var lat = current.coord.lat;
-    var lon = current.coord.lon;
     getCurrentUVI(lat, lon);
 
     // STILL NEEDED:
-        // change the color of the UV index depending on what it is
-        // 
+        // add icon for type of weather
+        // date might need to be changed to not UTC time??
+}
+
+var displayForecast = function(forecast) {
+    for (i = 0; i < forecast.length; i++) {
+        // container
+        var forecastCard = document.createElement("div")
+
+        // date
+        var date = forecast[i].daily.dt;
+        var dateEl = document.createElement("p")
+        dateEl.className = "ml-2";
+        dateEl.textContent = date;
+        forecastCard.appendChild(dateEl)
+        forecastEl.appendChild(forecastCard);
+        // Temp:
+        // Wind:
+        // Humidity: 
+    }
+    
+    // cards...divs??
 }
 
 getCurrent(searchCity);
-getForecast(searchCity);
+
 
 
 
