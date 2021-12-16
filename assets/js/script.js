@@ -7,7 +7,7 @@ var searchCity = "austin";
 
 // function to get current conditions
 var getCurrent = function(city) {
-    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
+    var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey + "&units=imperial";
     
     fetch(apiUrl)
         .then(function(response) {
@@ -15,15 +15,21 @@ var getCurrent = function(city) {
             if(response.ok) {
                 console.log("response is good!");
                 response.json()
-                    .then() //add fcn to display current conditions here --> something like displayCurrent(data)
+                    .then(function(data) {
+                        displayCurrent(data); //add fcn to display current conditions here --> something like displayCurrent(data)
+                    })
             } else {
                 alert("Error: didn't work...")
             }
     })
 }
 
+var getCurrentUVI = function(latitude, longitude) {
+    
+}
+
 var getForecast = function(city) {
-    var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey;
+    var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey + "&?units=imperial";
 
     fetch(apiUrl)
         .then(function(response) {
@@ -37,15 +43,42 @@ var getForecast = function(city) {
         })
 }
 
-var displayCurrent = function() {
+var displayCurrent = function(current) {
+    // add city and date to top of div
+    var cityName = current.name;
+    var date = new Date();
+    var [month, day, year] = [[date.getMonth() + 1], date.getDate(), date.getFullYear()];
+    var cityDateEl = document.createElement("h3");
+    date = "(" + month + "/" + day + "/" + year + ")";
+    cityDateEl.textContent = cityName + " " + date;
+    currentEl.appendChild(cityDateEl);
 
-    // h2 with [city] and [date]
-    // p with "Temp:" + temp data
-    // p 
+    // add temp
+    var temp = current.main.temp
+    var tempEl = document.createElement("p");
+    tempEl.textContent = "Temp: " + temp + "°F";
+    currentEl.appendChild(tempEl);
+    console.log("temp: " + temp);
+
+    // add wind
+    var wind = current.wind.speed;
+    var windEl = document.createElement("p");
+    windEl.textContent = "Wind: " + wind + "MPH";
+    currentEl.appendChild(windEl);
+
+
+    // add UV index
+    var uVIndex = "";
+
+    // h3 with [city] and [date]
+    // p with "Temp: " + temp data
+    // p with "Wind: " + wind data
+    // p with "UV Index: " + UV Data <-- this needs to be formatted with the right color...
 }
 
 getCurrent(searchCity);
 getForecast(searchCity);
+
 
 
 
