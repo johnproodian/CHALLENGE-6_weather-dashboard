@@ -3,9 +3,6 @@ APIKey = "433db97a8512e8112426ca764b0710cc";
 var searchCity = "austin";
 
 // function to get current conditions
-
-// api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
-
 var getCurrent = function(city) {
     var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
     
@@ -15,7 +12,7 @@ var getCurrent = function(city) {
             if(response.ok) {
                 console.log("response is good!");
                 response.json()
-                    .then()
+                    .then() //add fcn to display current conditions here --> something like displayCurrent(data)
             } else {
                 alert("Error: didn't work...")
             }
@@ -23,11 +20,23 @@ var getCurrent = function(city) {
     })
 }
 
-var getForecat = function(city) {
-    var apiUrl = "";
+var getForecast = function(city) {
+    var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&appid=" + APIKey;
+
+    fetch(apiUrl)
+        .then(function(response) {
+            if (response.ok) {
+                console.log("#2 worked");
+                response.json()
+                    .then() // put fcn here to display five day forecast --> something like displayForecast(data)
+            } else {
+                alert("#2 didn't work...");
+            }
+        })
 }
 
 getCurrent(searchCity);
+getForecast(searchCity);
 
 
 
