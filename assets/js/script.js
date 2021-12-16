@@ -1,5 +1,8 @@
 APIKey = "433db97a8512e8112426ca764b0710cc";
 
+var currentEl = document.querySelector("#current-weather");
+
+
 var searchCity = "austin";
 
 // function to get current conditions
@@ -16,7 +19,6 @@ var getCurrent = function(city) {
             } else {
                 alert("Error: didn't work...")
             }
-
     })
 }
 
@@ -33,6 +35,13 @@ var getForecast = function(city) {
                 alert("#2 didn't work...");
             }
         })
+}
+
+var displayCurrent = function() {
+
+    // h2 with [city] and [date]
+    // p with "Temp:" + temp data
+    // p 
 }
 
 getCurrent(searchCity);
