@@ -1,10 +1,26 @@
 APIKey = "433db97a8512e8112426ca764b0710cc";
 
 var currentEl = document.querySelector("#current-weather");
-var forecastEl = document.querySelector("#forecast-card-container");
+var forecastContainer = document.querySelector("#forecast-card-container");
+var searchInputEl = document.querySelector("#search");
+var searchForm = document.querySelector("#search-form");
 
+var formSubmitHandler = function(event) {
+    event.preventDefault();
 
-var searchCity = "austin";
+    currentEl.textContent = "";
+    forecastContainer.textContent = "";
+    var searchCity = searchInputEl.value.trim();
+
+    if (searchCity) {
+        searchInputEl.value = "";
+        getCurrent(searchCity);
+    } else {
+        alert("Please enter a city!");
+    }
+
+    
+}
 
 // function to get current conditions
 var getCurrent = function(city) {
@@ -23,7 +39,7 @@ var getCurrent = function(city) {
                         getForecast(latitude, longitude);
                     })
             } else {
-                alert("Error: didn't work...")
+                alert("Please enter a valid city!");
             }
     })
 }
@@ -61,7 +77,7 @@ var getCurrentUVI = function(latitude, longitude) {
 }
 
 var getForecast = function(latitude, longitude) {
-    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&appid=" + APIKey + "&exclude=current,minutely,hourly,alerts";
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&appid=" + APIKey + "&exclude=current,minutely,hourly,alerts&units=imperial";
 
     fetch(apiUrl)
         .then(function(response) {
@@ -69,7 +85,7 @@ var getForecast = function(latitude, longitude) {
                 console.log("#2 worked");
                 response.json()
                     .then(function(data) {
-                        debugger;
+                        // debugger;
                         displayForecast(data);
                     }) // put fcn here to display five day forecast --> something like displayForecast(data)
             } else {
@@ -123,26 +139,56 @@ var displayCurrent = function(current, lat, lon) {
 }
 
 var displayForecast = function(forecast) {
-    for (i = 0; i < forecast.length; i++) {
+    for (i = 1; i < 6; i++) {
         // container
         var forecastCard = document.createElement("div")
+        forecastCard.className = "bg-secondary text-white border p-2 m-2"
+
 
         // date
-        var date = forecast[i].daily.dt;
+        var unixTimeStamp = forecast.daily[i].dt;
+        var milliseconds = unixTimeStamp * 1000;
+        var dateObject = new Date(milliseconds);
+        var [month, day, year] = [[dateObject.getMonth() + 1], dateObject.getDate(), dateObject.getFullYear()]
+        console.log(i + ": " + dateObject)
+        var date = month + "/" + day + "/" + year;
         var dateEl = document.createElement("p")
-        dateEl.className = "ml-2";
+        dateEl.className = "font-weight-bold";
         dateEl.textContent = date;
         forecastCard.appendChild(dateEl)
-        forecastEl.appendChild(forecastCard);
+        
+        // Icon here...
+
+
         // Temp:
+        var temp = forecast.daily[i].temp.day;
+        var tempEl = document.createElement("p");
+        tempEl.className = "font-weight-bold";
+        tempEl.textContent = "Temp: " + temp + "°F";
+        forecastCard.appendChild(tempEl);
+        
         // Wind:
+        var wind = forecast.daily[i].wind_speed;
+        var windEl = document.createElement("p")
+        windEl.className = "font-weight-bold";
+        windEl.textContent = "Wind: " + wind + " MPH";
+        forecastCard.appendChild(windEl);
+
         // Humidity: 
+        var humidity = forecast.daily[i].humidity;
+        var humidityEl = document.createElement("p");
+        humidityEl.className = "font-weight-bold";
+        humidityEl.textContent = "Humidity: " + humidity + "%";
+        forecastCard.appendChild(humidityEl);
+
+        forecastContainer.appendChild(forecastCard);
     }
     
     // cards...divs??
 }
 
-getCurrent(searchCity);
+searchForm.addEventListener("submit", formSubmitHandler);
+
 
 
 
@@ -155,18 +201,23 @@ getCurrent(searchCity);
 // Call get local storage and display local storage fcns(2)
 
 // Form submit handler fcn --> Receive input from search form and store it in a variable
+
+
+// DONE (mostly):
+    // Get current conditions fcn --> Fetch current conditions from api based on input, store it in variable(s)
+    //     conditions: 
+    //         city name
+    //         date
+    //         icon rep of weather conditions
+    //         temperature
+    //         humidity
+    //         wind speed
+    //         UV index
+    // Get future conditions fcn --> Fetch future conditions from api based on input, store it in variable(s)
+    // Display current and future conditions --> display conditions function
+
 // Store search fcn --> store search in localStorage
-// Get current conditions fcn --> Fetch current conditions from api based on input, store it in variable(s)
-    // conditions: 
-        // city name
-        // date
-        // icon rep of weather conditions
-        // temperature
-        // humidity
-        // wind speed
-        // UV index
-// Get future conditions fcn --> Fetch future conditions from api based on input, store it in variable(s)
-// Display current and future conditions --> display conditions function
+
 
 // Listen for click, then run form submiit handler fcn 
     // --> store current search fcn, 

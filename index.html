@@ -15,9 +15,9 @@
 
     <main class="d-flex flex-wrap">
         <div class="col-12 col-md-3 border border-primary">
-            <form class="d-flex flex-column border-bottom">
+            <form id="search-form" class="d-flex flex-column border-bottom">
                 <h2 class="font-weight-bold">Search for a City:</h2>
-                <input type="text" name="search" class="rounded-lg" placeholder="San Diego">
+                <input type="text" name="search" id="search" class="rounded-lg" placeholder="San Diego">
                 <button type="button" id="search-btn" class="my-3 rounded-lg">Search</button>
             </form>
             <ul></ul>
@@ -31,7 +31,7 @@
             <!-- 5-day forecast -->
             <div id="forecast" class="border border-secondary">
                 <h4>5-Day Forecast:</h4>
-                <div id="forecast-card-container" class="d-flex"></div>
+                <div id="forecast-card-container" class="d-flex flex-wrap justify-content-between"></div>
             </div>
         </div>
     </main>
