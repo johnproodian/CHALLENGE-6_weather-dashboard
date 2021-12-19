@@ -2,6 +2,7 @@ APIKey = "433db97a8512e8112426ca764b0710cc";
 
 var currentEl = document.querySelector("#current-weather");
 var forecastContainer = document.querySelector("#forecast-card-container");
+var forecastH2El = document.querySelector("#forecast-title");
 var searchInputEl = document.querySelector("#search");
 var searchForm = document.querySelector("#search-form");
 
@@ -10,6 +11,7 @@ var formSubmitHandler = function(event) {
 
     currentEl.textContent = "";
     forecastContainer.textContent = "";
+    forecastH2El.textContent = "";
     var searchCity = searchInputEl.value.trim();
 
     if (searchCity) {
@@ -136,9 +138,12 @@ var displayCurrent = function(current, lat, lon) {
     // STILL NEEDED:
         // add icon for type of weather
         // date might need to be changed to not UTC time??
+        // stop the dropdown history?? --> for one, it doesn't seem to work if selected
 }
 
 var displayForecast = function(forecast) {
+    forecastH2El.textContent = "5-Day Forecast:";
+
     for (i = 1; i < 6; i++) {
         // container
         var forecastCard = document.createElement("div")
@@ -184,7 +189,6 @@ var displayForecast = function(forecast) {
         forecastContainer.appendChild(forecastCard);
     }
     
-    // cards...divs??
 }
 
 searchForm.addEventListener("submit", formSubmitHandler);
