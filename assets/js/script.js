@@ -1,5 +1,4 @@
 // localStorage
-    // 1. Empty array of stored searches at top of page
     // 2. get localStorage at start of page
         // check to see if local storage; 
             // if no, end, 
@@ -8,12 +7,21 @@
 
     // 4. enter search item into local storage
         // first, check to see if search is already in the array; if not, push it to array, dynamically add a card with its text and event listener (to enter text as search input)
+        // second, update localStorage 
 
 
 
 
 var storedSearches = [];
 
+var getLocalStorage = function() {
+    storedSearches = JSON.parse(localStorage.getItem("searches"));
+    if (!storedSearches) {
+        storedSearches = [];
+    }
+}
+
+getLocalStorage();
 
 var APIKey = "433db97a8512e8112426ca764b0710cc";
 
@@ -23,6 +31,8 @@ var forecastContainer = document.querySelector("#forecast-card-container");
 var forecastH2El = document.querySelector("#forecast-title");
 var searchInputEl = document.querySelector("#search");
 var searchForm = document.querySelector("#search-form");
+
+
 
 var displaySearchHistory = function(storedSearchesArray) {
     // create a searchable/clickable card for every city in the array
