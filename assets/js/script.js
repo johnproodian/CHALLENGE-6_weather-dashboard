@@ -1,4 +1,20 @@
-APIKey = "433db97a8512e8112426ca764b0710cc";
+// localStorage
+    // 1. Empty array of stored searches at top of page
+    // 2. get localStorage at start of page
+        // check to see if local storage; 
+            // if no, end, 
+            // if yes, get them, destringify the object, add them to array (need to loop through??);
+    // 3. loop through the array and dynamically create card(?) for each search item, with event listeners for each (event listener --> enter search text into search input)
+
+    // 4. enter search item into local storage
+        // first, check to see if search is already in the array; if not, push it to array, dynamically add a card with its text and event listener (to enter text as search input)
+
+
+
+
+var storedSearches = [];
+
+var APIKey = "433db97a8512e8112426ca764b0710cc";
 
 var currentEl = document.querySelector("#current-weather");
 var forecastContainer = document.querySelector("#forecast-card-container");
@@ -12,16 +28,21 @@ var formSubmitHandler = function(event) {
     currentEl.textContent = "";
     forecastContainer.textContent = "";
     forecastH2El.textContent = "";
-    var searchCity = searchInputEl.value.trim();
+    var searchCity = searchInputEl.value.toLowerCase().trim();
 
     if (searchCity) {
         searchInputEl.value = "";
+        storeSearch(searchCity);
         getCurrent(searchCity);
     } else {
         alert("Please enter a city!");
-    }
+    } 
+}
 
-    
+var storeSearch = function(city) {
+    if (!storedSearches.includes(city)) {
+        storedSearches.push(city);
+    } 
 }
 
 // function to get current conditions
@@ -194,11 +215,18 @@ var displayForecast = function(forecast) {
 searchForm.addEventListener("submit", formSubmitHandler);
 
 
+// --------------
 
 
 
 
 
+
+
+
+
+
+// ------------------
 // Get previous searches (local storage) fcn --> Check local storage and get previous searches
 // Display previous searches fcn --> Display previous searches in clickable buttons below search form
 
