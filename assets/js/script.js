@@ -14,13 +14,31 @@
 
 var storedSearches = [];
 
+
 var APIKey = "433db97a8512e8112426ca764b0710cc";
 
+var searchHistoryList = document.querySelector("#search-history");
 var currentEl = document.querySelector("#current-weather");
 var forecastContainer = document.querySelector("#forecast-card-container");
 var forecastH2El = document.querySelector("#forecast-title");
 var searchInputEl = document.querySelector("#search");
 var searchForm = document.querySelector("#search-form");
+
+var displaySearchHistory = function(storedSearchesArray) {
+    // create a searchable/clickable card for every city in the array
+    searchHistoryList.textContent = "";
+
+    for (i = 0; i < storedSearchesArray.length; i++) {
+        console.log("storedSearchesArray[i]: " + storedSearchesArray[i]);
+        var historyBtn = document.createElement("button");
+        historyBtn.textContent = storedSearchesArray[i];
+        var historyLiEl = document.createElement("li");
+        historyLiEl.appendChild(historyBtn);
+        searchHistoryList.appendChild(historyLiEl);
+
+    }
+
+}
 
 var formSubmitHandler = function(event) {
     event.preventDefault();
@@ -42,7 +60,12 @@ var formSubmitHandler = function(event) {
 var storeSearch = function(city) {
     if (!storedSearches.includes(city)) {
         storedSearches.push(city);
+        console.log("storedSearches: " + storedSearches);
+        displaySearchHistory(storedSearches);
     } 
+
+
+
 }
 
 // function to get current conditions
@@ -62,6 +85,10 @@ var getCurrent = function(city) {
                         getForecast(latitude, longitude);
                     })
             } else {
+                debugger;
+                storedSearches.pop();
+                displaySearchHistory(storedSearches);
+                console.log("storedSearches: " + storedSearches);
                 alert("Please enter a valid city!");
             }
     })
