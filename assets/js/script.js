@@ -1,27 +1,5 @@
-// localStorage
-    // 2. get localStorage at start of page
-        // check to see if local storage; 
-            // if no, end, 
-            // if yes, get them, destringify the object, add them to array (need to loop through??);
-    // 3. loop through the array and dynamically create card(?) for each search item, with event listeners for each (event listener --> enter search text into search input)
-
-    // 4. enter search item into local storage
-        // first, check to see if search is already in the array; if not, push it to array, dynamically add a card with its text and event listener (to enter text as search input)
-        // second, update localStorage 
-
-
-
 
 var storedSearches = [];
-
-var getLocalStorage = function() {
-    storedSearches = JSON.parse(localStorage.getItem("searches"));
-    if (!storedSearches) {
-        storedSearches = [];
-    }
-}
-
-getLocalStorage();
 
 var APIKey = "433db97a8512e8112426ca764b0710cc";
 
@@ -31,8 +9,6 @@ var forecastContainer = document.querySelector("#forecast-card-container");
 var forecastH2El = document.querySelector("#forecast-title");
 var searchInputEl = document.querySelector("#search");
 var searchForm = document.querySelector("#search-form");
-
-
 
 var displaySearchHistory = function(storedSearchesArray) {
     // create a searchable/clickable card for every city in the array
@@ -45,10 +21,19 @@ var displaySearchHistory = function(storedSearchesArray) {
         var historyLiEl = document.createElement("li");
         historyLiEl.appendChild(historyBtn);
         searchHistoryList.appendChild(historyLiEl);
-
     }
-
 }
+
+var getLocalStorage = function() {
+    storedSearches = JSON.parse(localStorage.getItem("searches"));
+    if (!storedSearches) {
+        storedSearches = [];
+    } else {
+        displaySearchHistory(storedSearches);
+    }
+}
+
+getLocalStorage();
 
 var formSubmitHandler = function(event) {
     event.preventDefault();
@@ -70,7 +55,7 @@ var formSubmitHandler = function(event) {
 var storeSearch = function(city) {
     if (!storedSearches.includes(city)) {
         storedSearches.push(city);
-        console.log("storedSearches: " + storedSearches);
+        localStorage.setItem("searches", JSON.stringify(storedSearches));
         displaySearchHistory(storedSearches);
     } 
 
@@ -95,8 +80,8 @@ var getCurrent = function(city) {
                         getForecast(latitude, longitude);
                     })
             } else {
-                debugger;
                 storedSearches.pop();
+                localStorage.setItem("searches", JSON.stringify(storedSearches));
                 displaySearchHistory(storedSearches);
                 console.log("storedSearches: " + storedSearches);
                 alert("Please enter a valid city!");
