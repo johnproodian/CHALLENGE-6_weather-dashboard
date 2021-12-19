@@ -2,8 +2,19 @@ h1 {
     background-image: linear-gradient(to right, #286BC4, #26105A);
 }
 
+ul {
+    list-style-type: none;
+}
+
 #search-btn {
     background-color: #286BC4;
     color: white;
+}
+
+.history-btn {
+    background-color: #ADD8E6;
+    color: black;
+    display: block;
+    width: 100%;
 }
 

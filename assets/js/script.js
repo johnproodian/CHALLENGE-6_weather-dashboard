@@ -1,3 +1,10 @@
+// Next time:
+    // ***figure out how to appropriately make search history clickable
+    // finish styling/css
+    // **fix search--only return works, not clicking
+    // add weather icons (see group project--using imgs)
+    // stop drowdown history??
+
 
 var storedSearches = [];
 
@@ -17,10 +24,16 @@ var displaySearchHistory = function(storedSearchesArray) {
     for (i = 0; i < storedSearchesArray.length; i++) {
         console.log("storedSearchesArray[i]: " + storedSearchesArray[i]);
         var historyBtn = document.createElement("button");
+        historyBtn.className = "history-btn my-2 rounded-lg";
         historyBtn.textContent = storedSearchesArray[i];
-        var historyLiEl = document.createElement("li");
-        historyLiEl.appendChild(historyBtn);
-        searchHistoryList.appendChild(historyLiEl);
+        searchHistoryList.appendChild(historyBtn);
+        historyBtn.addEventListener("click", function() {
+            currentEl.textContent = "";
+            forecastContainer.textContent = "";
+            forecastH2El.textContent = "";
+            getCurrent(storedSearchesArray[i]);
+
+        })
     }
 }
 
