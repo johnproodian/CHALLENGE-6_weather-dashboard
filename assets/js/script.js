@@ -17,6 +17,7 @@ var forecastContainer = document.querySelector("#forecast-card-container");
 var forecastH2El = document.querySelector("#forecast-title");
 var searchInputEl = document.querySelector("#search");
 var searchForm = document.querySelector("#search-form");
+var searchBtn = document.querySelector("#search-btn")
 
 var displaySearchHistory = function(storedSearchesArray) {
     // create a searchable/clickable card for every city in the array
@@ -250,6 +251,7 @@ var displayForecast = function(forecast) {
 }
 
 searchForm.addEventListener("submit", formSubmitHandler);
+// searchBtn.addEventListener("submit", formSubmitHandler);
 searchHistoryList.addEventListener("click", function(evt) {
     if (evt.target.classList.contains('history-btn')) {
         currentEl.textContent = "";
