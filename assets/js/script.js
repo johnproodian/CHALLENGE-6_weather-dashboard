@@ -11,6 +11,8 @@ var storedSearches = [];
 var APIKey = "433db97a8512e8112426ca764b0710cc";
 
 var searchHistoryList = document.querySelector("#search-history");
+
+
 var currentEl = document.querySelector("#current-weather");
 var forecastContainer = document.querySelector("#forecast-card-container");
 var forecastH2El = document.querySelector("#forecast-title");
@@ -27,15 +29,16 @@ var displaySearchHistory = function(storedSearchesArray) {
         historyBtn.className = "history-btn my-2 rounded-lg";
         historyBtn.textContent = storedSearchesArray[i];
         searchHistoryList.appendChild(historyBtn);
-        historyBtn.addEventListener("click", function() {
-            currentEl.textContent = "";
-            forecastContainer.textContent = "";
-            forecastH2El.textContent = "";
-            getCurrent(storedSearchesArray[i]);
-
-        })
     }
 }
+
+var historyGetCurrent = function(searchCity) {
+    currentEl.textContent = "";
+    forecastContainer.textContent = "";
+    forecastH2El.textContent = "";
+    getCurrent(searchCity);
+};
+
 
 var getLocalStorage = function() {
     storedSearches = JSON.parse(localStorage.getItem("searches"));
@@ -248,6 +251,17 @@ var displayForecast = function(forecast) {
 }
 
 searchForm.addEventListener("submit", formSubmitHandler);
+searchHistoryList.addEventListener("click", function(evt) {
+    if (evt.target.classList.contains('history-btn')) {
+        currentEl.textContent = "";
+        forecastContainer.textContent = "";
+        forecastH2El.textContent = "";
+        var searchCity = evt.target.innerHTML;
+
+        storeSearch(searchCity);
+        getCurrent(searchCity);
+    }
+})
 
 
 // --------------
