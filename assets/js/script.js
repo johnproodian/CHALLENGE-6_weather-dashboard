@@ -1,5 +1,4 @@
 // Next time:
-    // ***figure out how to appropriately make search history clickable
     // finish styling/css
     // **fix search--only return works, not clicking
     // add weather icons (see group project--using imgs)
@@ -161,11 +160,11 @@ var displayCurrent = function(current, lat, lon) {
     var cityName = current.name;
     var date = new Date();
     var [month, day, year] = [[date.getMonth() + 1], date.getDate(), date.getFullYear()];
-    var weatherIcon = current.weather.icon;
+    // var weatherIcon = current.weather.icon;
     var cityDateIconEl = document.createElement("h3");
     date = "(" + month + "/" + day + "/" + year + ")";
     cityDateIconEl.className = "ml-2";
-    cityDateIconEl.textContent = cityName + " " + date + " " + weatherIcon;
+    cityDateIconEl.textContent = cityName + " " + date; //+ " " + weatherIcon;
     currentEl.appendChild(cityDateIconEl);
 
     // add temp
