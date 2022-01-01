@@ -15,3 +15,9 @@ The purpose of this challenge was to create a weather dashboard that, for a sear
 
 ## Website
 https://johnproodian.github.io/weather-dashboard-challenge/
+
+## (Recently Learned) Skills Used
+* Using the fetch API to send requests to a server-side API
+* Receiving and parsing data in JSON format
+* Using returned data to generate HTML
+* Handling response codes and metadata (including headers, status, and URL)
