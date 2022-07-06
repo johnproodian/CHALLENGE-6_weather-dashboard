@@ -1,6 +1,5 @@
 # Weather Dashboard
 
-## Purpose
 For a searched city, this weather dashboard app gives the current weather and the 5-day weather forecast. Additionally, it stores previous searches for future searching at a click.
 
 ## Screenshot
