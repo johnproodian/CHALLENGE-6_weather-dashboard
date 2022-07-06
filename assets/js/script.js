@@ -167,6 +167,7 @@ var displayCurrent = function(current, lat, lon) {
     cityDateIconEl.className = "ml-2";
     cityDateIconEl.textContent = cityName + " " + date; //+ " " + weatherIcon;
     currentEl.appendChild(cityDateIconEl);
+    currentEl.className = "border border-secondary"
 
     // add temp
     var temp = current.main.temp

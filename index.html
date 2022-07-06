@@ -14,7 +14,7 @@
     </header>
 
     <main class="d-flex flex-wrap">
-        <div class="col-12 col-md-3 border border-primary">
+        <div class="col-12 col-md-3">
             <form id="search-form" class="d-flex flex-column border-bottom">
                 <h2 class="font-weight-bold">Search for a City:</h2>
                 <input type="text" name="search" id="search" class="rounded-lg" placeholder="San Diego">
@@ -24,12 +24,13 @@
 
         </div>
 
-        <div class="col-12 col-md-9 border border-primary">
+        <div class="col-12 col-md-9">
             <!-- Current Weather -->
-            <div id="current-weather" class="border border-secondary"></div>
+            <div id="current-weather" class=""></div>
+            <!-- class="border border-secondary" -->
 
             <!-- 5-day forecast -->
-            <div id="forecast" class="border border-secondary">
+            <div id="forecast">
                 <h4 id="forecast-title"></h4>
                 <div id="forecast-card-container" class="d-flex flex-wrap justify-content-between"></div>
             </div>
