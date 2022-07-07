@@ -12,7 +12,7 @@ For a searched city, this weather dashboard app gives the current weather and th
 * JavaScript
 
 ## Website
-https://johnproodian.github.io/weather-dashboard-challenge/
+https://johnproodian.github.io/weather-dashboard/
 
 ## (Recently Learned) Skills Used
 * Using the fetch API to send requests to a server-side API
