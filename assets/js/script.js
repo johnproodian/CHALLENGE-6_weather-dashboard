@@ -1,9 +1,3 @@
-
-      // STILL NEEDED:
-        // add icon for type of weather
-        // date might need to be changed to not UTC time??
-        // delete search history buttons
-
 let storedSearches = [];
 
 const APIKey = "433db97a8512e8112426ca764b0710cc";
@@ -142,7 +136,7 @@ const getCurrentUVI = function(latitude, longitude) {
         .then(function(response) {
             if (response.ok) {
                 response.json()
-                    .then(function(data) {
+                    .then((data) => {
                         let currentUVI = data.current.uvi;
                         let currentUVIEl = document.createElement("p");
                         let currentUVISpan = document.createElement("span");
@@ -165,7 +159,7 @@ const getCurrentUVI = function(latitude, longitude) {
         })
 }
 
-const getForecast = function(latitude, longitude) {
+const getForecast = (latitude, longitude) => {
     let apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + latitude + "&lon=" + longitude + "&appid=" + APIKey + "&exclude=current,minutely,hourly,alerts&units=imperial";
 
     fetch(apiUrl)
@@ -286,14 +280,16 @@ searchHistoryList.addEventListener("click", function(evt) {
         getCurrent(searchCity);
     }
 });
-// deleteBtn.addEventListener("click", deleteSearchHistory);
 
 getLocalStorage();
 
 // --------------
 
 
-
+ // STILL NEEDED:
+        // add icon for type of weather
+        // date might need to be changed to not UTC time??  
+        // clean up comments
 
 
 
