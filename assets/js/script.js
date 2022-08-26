@@ -74,7 +74,7 @@ const formSubmitHandler = function(event) {
     } 
 }
 
-const storeSearch = function(city) {
+const storeSearch = (city) => {
     createDeleteBtn();
   
     if (!storedSearches.includes(city)) {
@@ -101,7 +101,7 @@ const deleteSearchHistory = () => {
 }
 
 // function to get current conditions
-const getCurrent = function(city) {
+const getCurrent = (city) => {
     let apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey + "&units=imperial";
     
     fetch(apiUrl)
@@ -218,7 +218,7 @@ const displayCurrent = function(current, lat, lon) {
     getCurrentUVI(lat, lon);
 }
 
-const displayForecast = function(forecast) {
+const displayForecast = (forecast) => {
     forecastH2El.textContent = "5-Day Forecast:";
 
     for (i = 1; i < 6; i++) {
