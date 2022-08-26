@@ -11,6 +11,13 @@ ul {
     color: white;
 }
 
+.delete-btn {
+    background-color: #b22222;
+    color: white;
+    display: block;
+    width: 50%;
+}
+
 .history-btn {
     background-color: #ADD8E6;
     color: black;

@@ -8,19 +8,20 @@ let storedSearches = [];
 
 const APIKey = "433db97a8512e8112426ca764b0710cc";
 
-let searchHistoryList = document.querySelector("#search-history");
-
-
+const searchHistoryList = document.querySelector("#search-history");
 const currentEl = document.querySelector("#current-weather");
 const forecastContainer = document.querySelector("#forecast-card-container");
 const forecastH2El = document.querySelector("#forecast-title");
 const searchInputEl = document.querySelector("#search");
 const searchForm = document.querySelector("#search-form");
 const searchBtn = document.querySelector("#search-btn")
+const deleteDivEl = document.querySelector("#delete-div");
+const deleteBtn = document.querySelector("#delete-btn");
 
 const displaySearchHistory = function(storedSearchesArray) {
     // create a searchable/clickable card for every city in the array
     searchHistoryList.textContent = "";
+    console.log(storedSearchesArray.length)
 
     for (i = 0; i < storedSearchesArray.length; i++) {
         console.log("storedSearchesArray[i]: " + storedSearchesArray[i]);
@@ -38,6 +39,19 @@ const historyGetCurrent = function(searchCity) {
     getCurrent(searchCity);
 };
 
+const createDeleteBtn = () => {
+    console.log(deleteDivEl.children.length);
+    if (deleteDivEl.children.length === 0) {
+        let deleteBtn = document.createElement("button");
+        console.log(deleteBtn);
+        deleteBtn.classList.add("delete-btn", "my-3", "rounded-lg");
+        deleteBtn.textContent = "Delete Search History";
+        console.log(deleteBtn);
+        deleteDivEl.appendChild(deleteBtn).addEventListener("click", deleteSearchHistory);
+        console.log(deleteDivEl);
+    }
+    
+};
 
 const getLocalStorage = function() {
     storedSearches = JSON.parse(localStorage.getItem("searches"));
@@ -45,10 +59,9 @@ const getLocalStorage = function() {
         storedSearches = [];
     } else {
         displaySearchHistory(storedSearches);
+        createDeleteBtn();
     }
 }
-
-getLocalStorage();
 
 const formSubmitHandler = function(event) {
     event.preventDefault();
@@ -68,11 +81,29 @@ const formSubmitHandler = function(event) {
 }
 
 const storeSearch = function(city) {
+    createDeleteBtn();
+  
     if (!storedSearches.includes(city)) {
         storedSearches.push(city);
+        console.log(storedSearches);
         localStorage.setItem("searches", JSON.stringify(storedSearches));
+        console.log('localStorate set item ran');
         displaySearchHistory(storedSearches);
     } 
+}
+
+const deleteSearchHistory = () => {
+    localStorage.removeItem("searches");
+
+    while (searchHistoryList.childNodes.length > 0) {
+        searchHistoryList.removeChild(searchHistoryList.firstChild);
+    }
+
+    console.log(deleteDivEl.firstChild);
+    console.log(deleteDivEl.children[0]);
+    deleteDivEl.removeChild(deleteDivEl.children[0]);
+    storedSearches = [];
+
 }
 
 // function to get current conditions
@@ -92,6 +123,7 @@ const getCurrent = function(city) {
                         getForecast(latitude, longitude);
                     })
             } else {
+                console.log(storedSearches);
                 storedSearches.pop();
                 localStorage.setItem("searches", JSON.stringify(storedSearches));
                 displaySearchHistory(storedSearches);
@@ -190,8 +222,6 @@ const displayCurrent = function(current, lat, lon) {
 
     // add UV index
     getCurrentUVI(lat, lon);
-
-  
 }
 
 const displayForecast = function(forecast) {
@@ -252,11 +282,13 @@ searchHistoryList.addEventListener("click", function(evt) {
         forecastH2El.textContent = "";
         let searchCity = evt.target.innerHTML;
 
-        storeSearch(searchCity);
+        // storeSearch(searchCity);
         getCurrent(searchCity);
     }
-})
+});
+// deleteBtn.addEventListener("click", deleteSearchHistory);
 
+getLocalStorage();
 
 // --------------
 
